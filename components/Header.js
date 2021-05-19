@@ -17,8 +17,11 @@ import HeaderIcon from "./HeaderIcon";
 import { signOut, useSession } from "next-auth/client";
 
 const Header = () => {
-  const session = useSession();
-  console.log(session[0].user.image);
+  const [
+    {
+      user: { name, image },
+    },
+  ] = useSession();
 
   return (
     <div className="flex items-center sticky top-0 z-50 bg-white p-1 lg:px-5 shadow-md">
@@ -34,7 +37,7 @@ const Header = () => {
       <div className="flex  items-center ml-2 rounded-full bg-gray-100 p-2 text-gray-600">
         <SearchIcon className="h-6 " />
         <input
-          className=" hidden md:inline-flex flex ml-2 items-center bg-transparent  outline-none placeholder-gray-500 flex-shrink "
+          className=" hidden md:inline-flex  ml-2 items-center bg-transparent  outline-none placeholder-gray-500 flex-shrink "
           type="text"
           placeholder="Search Facebook"
         />
@@ -54,7 +57,7 @@ const Header = () => {
       {/* right */}
       <div className="flex items-center justify-end sm:space-x-2">
         <Image
-          src={session[0].user.image}
+          src={image}
           width={40}
           height={40}
           layout="fixed"
@@ -63,7 +66,9 @@ const Header = () => {
           "
           onClick={signOut}
         />
-        <p className=" whitespace-nowrap font-semibold  pr-3 ">Ankit Vasita</p>
+        <p className=" hidden md:inline-flex whitespace-nowrap font-semibold  pr-3 ">
+          {name}
+        </p>
         <ViewGridIcon className="icon" />
         <ChatIcon className="icon" />
         <BellIcon className="icon" />
